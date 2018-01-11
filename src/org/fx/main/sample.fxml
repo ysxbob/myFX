@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.effect.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#keyListener" prefHeight="280.0" prefWidth="550.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fx.controller.Controller">
+    <tabs>
+        <Tab text="说明">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Label layoutX="6.0" layoutY="14.0" text="mac地址：" />
+                  <Label fx:id="macLabel" layoutX="71.0" layoutY="14.0" />
+                  <Label layoutX="6.0" layoutY="45.0" text="授权码：" />
+                  <TextField fx:id="keyText" layoutX="71.0" layoutY="40.0" onAction="#setKey" promptText="请输入授权码" />
+                  <Label layoutX="258.0" layoutY="14.0" text="拷贝mac地址申请授权码" />
+                  <Label layoutX="6.0" layoutY="107.0" text="QQ：123456789" />
+                  <Label layoutX="6.0" layoutY="79.0" text="联系方式：" />
+               </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+        <Tab text="点击任务">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="600.0">
+                    <children>
+                        <TableView fx:id="taskView" editable="true" prefHeight="220.0" prefWidth="550.0">
+                            <columns>
+                                <TableColumn id="id" fx:id="idCol" prefWidth="32.0" text="序号" />
+                                <TableColumn id="name" fx:id="nameCol" prefWidth="44.0" text="别名" />
+                        <TableColumn id="location" fx:id="locationCol" prefWidth="53.0" text="位置" />
+                                <TableColumn id="x" prefWidth="49.0" text="横坐标" fx:id="xCol" />
+                                <TableColumn id="y" fx:id="yCol" prefWidth="54.0" text="纵坐标" />
+                                <TableColumn id="clickNumber" fx:id="clickNumberCol" prefWidth="37.0" text="次数" />
+                                <TableColumn id="delay" fx:id="dealyCol" prefWidth="84.0" text="延时（ms）" />
+                        <TableColumn id="enable" fx:id="enableCol" minWidth="0.0" prefWidth="59.0" text="开启" />
+                                <TableColumn id="delete" fx:id="deleteCol" minWidth="0.0" prefWidth="64.0" text="删除" />
+                        <TableColumn id="add" fx:id="addCol" minWidth="0.0" prefWidth="57.0" text="新增" />
+                            </columns>
+                        </TableView>
+                  <Label layoutX="14.0" layoutY="220.0" text="开启任务：" />
+                  <CheckBox fx:id="startTask" layoutX="89.0" layoutY="220.0" mnemonicParsing="false" onAction="#startJob" />
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+    </tabs>
+</TabPane>
