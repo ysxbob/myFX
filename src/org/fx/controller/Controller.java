@@ -74,7 +74,6 @@ public class Controller {
         double maxX = bounds.getMaxX();
         double maxY = bounds.getMaxY();
 //        text.setText("minX:" + minX + ",minY+" + minY + ",maxX:" + maxX + ",maxY:" + maxY);
-
 //        Group group = new Group();
 //        group.getChildren().add(text);
 //        Scene scene = new Scene(group,1400,900);
