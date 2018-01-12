@@ -3,6 +3,7 @@ package org.fx.utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.fx.model.Task;
+import org.fx.thread.DealyStartThread;
 
 import java.util.Date;
 
@@ -54,27 +55,37 @@ public class TableViewUtils {
     }
     public static void startClickJob(){
         startFlag =true;
-        Date start = new Date();
-        while (startFlag){
-            for (int i = 0; i < data.size(); i++) {
-                Task task = data.get(i);
-                if(task.getEnable()&&startFlag){
-                    Date now = new Date();
-                    if((now.getTime()-start.getTime())<5*60*1000){
-                        MouseUtils.clikTarget(task.getX(),task.getY(),task.getClickNumber());
-                    }else{
-                        cancleClickJob();
-                    }
-                    try {
-                        Thread.sleep(task.getDealy());
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
+        DealyStartThread startJob = new DealyStartThread(new Date());
+//        Date start = new Date();
+//        while (startFlag){
+//            for (int i = 0; i < data.size(); i++) {
+//                Task task = data.get(i);
+//                if(task.getEnable()&&startFlag){
+//                    Date now = new Date();
+//                    if((now.getTime()-start.getTime())<5*60*1000){
+//                        MouseUtils.clikTarget(task.getX(),task.getY(),task.getClickNumber());
+//                    }else{
+//                        cancleClickJob();
+//                    }
+//                    try {
+//                        Thread.sleep(task.getDealy());
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        }
+    }
+
+    public static void dealyStartClickJob(Date startDate){
+
+    }
+    public static  boolean isClick(){
+        return startFlag;
     }
     public static void cancleClickJob(){
         startFlag = false;
     }
+
+
 }
