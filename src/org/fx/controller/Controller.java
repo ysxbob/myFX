@@ -160,7 +160,6 @@ public class Controller {
 
         deleteCol.setCellFactory((col) -> {
             TableCell<Task, String> cell = new TableCell<Task, String>() {
-
                 @Override
                 public void updateItem(String item, boolean empty) {
                     super.updateItem(item, empty);
