@@ -1,6 +1,8 @@
 package org.fx.controller;
 
 
+import com.melloware.jintellitype.HotkeyListener;
+import com.melloware.jintellitype.JIntellitype;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
@@ -37,19 +39,20 @@ public class Controller {
     @FXML
     private TableColumn<Task, Boolean> enableCol;
 
-    public void startJob(ActionEvent event){
-        CheckBox ck =(CheckBox) event.getSource();
-        if(ck.isSelected()){
-            if(AuthUtils.auth()){
+    public void startJob(ActionEvent event) {
+        CheckBox ck = (CheckBox) event.getSource();
+        if (ck.isSelected()) {
+            if (AuthUtils.auth()) {
                 taskView.setEditable(false);
                 TableViewUtils.startClickJob();
-            }else{
+                System.out.println("start job");
+            } else {
                 ck.setSelected(false);
             }
-            ck.setSelected(false);
-            TableViewUtils.cancleClickJob();
-            taskView.setEditable(true);
-        }else{
+//            ck.setSelected(false);
+//            TableViewUtils.cancleClickJob();
+//            taskView.setEditable(true);
+        } else {
             TableViewUtils.cancleClickJob();
             taskView.setEditable(true);
 
@@ -97,8 +100,9 @@ public class Controller {
 //    }
     @FXML
     private void initialize() {
+        setHotKey();
         macLabel.setText(AuthUtils.getMacStr());
-        if(!"".equals(AuthUtils.getKey())){
+        if (!"".equals(AuthUtils.getKey())) {
             keyText.setText(AuthUtils.getKey());
         }
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -137,7 +141,7 @@ public class Controller {
                         delBtn.setOnMouseClicked((me) -> {
                             Task task = this.getTableView().getItems().get(this.getIndex());
 
-                            ScreenShotWindow ssw= null;
+                            ScreenShotWindow ssw = null;
                             try {
                                 ssw = new ScreenShotWindow(task);
                             } catch (AWTException e) {
@@ -170,7 +174,8 @@ public class Controller {
                         delBtn.setOnMouseClicked((me) -> {
                             Task task = this.getTableView().getItems().get(this.getIndex());
                             System.out.println("删除 " + task.getName() + "," + task.getEnable() + " 的记录");
-                            if(task.getId() != 1) { TableViewUtils.delTask(task.getId());
+                            if (task.getId() != 1) {
+                                TableViewUtils.delTask(task.getId());
                             }
                         });
                     }
@@ -205,6 +210,25 @@ public class Controller {
         taskView.setItems(viewUtils.getDefaultTask());
     }
 
+    private void setHotKey() {
+        JIntellitype.getInstance().registerHotKey(0, JIntellitype.MOD_ALT, (int) 'Q');
+        JIntellitype.getInstance().registerHotKey(1, JIntellitype.MOD_ALT, (int) 'E');
+        JIntellitype.getInstance().addHotKeyListener(new HotkeyListener() {
+            @Override
+            public void onHotKey(int markCode) {
+                switch (markCode) {
+                    case 0:
+                        System.out.println("hot key enable");
+                        TableViewUtils.cancleClickJob();
+                        break;
+                    case 1:
+                        System.exit(0);
+                        break;
+                }
+            }
+        });
+    }
+
     public void setMainApp(TableViewUtils viewUtils) {
         this.viewUtils = viewUtils;
         taskView.setItems(viewUtils.getData());
@@ -212,7 +236,7 @@ public class Controller {
     }
 
     public void keyListener(KeyEvent keyEvent) {
-        System.out.println("key code:"+keyEvent.getCharacter());
+        System.out.println("key code:" + keyEvent.getCharacter());
     }
 
     public void setKey(ActionEvent event) {

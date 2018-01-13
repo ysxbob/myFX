@@ -36,15 +36,13 @@ public class DealyStartThread implements Runnable {
                 Task task = data.get(i);
                 if(task.getEnable()){
                     Date now = new Date();
-                    if((now.getTime()-start.getTime())<5*60*1000){
-                        MouseUtils.clikTarget(task.getX(),task.getY(),task.getClickNumber());
-                    }else{
-                        TableViewUtils.cancleClickJob();
-                    }
-                    try {
-                        Thread.sleep(task.getDealy());
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                    if(TableViewUtils.isClick()) {
+                        MouseUtils.clikTarget(task.getX(), task.getY(), task.getClickNumber());
+                        try {
+                            Thread.sleep(task.getDealy());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
