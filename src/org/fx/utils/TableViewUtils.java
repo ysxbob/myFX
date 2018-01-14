@@ -56,25 +56,7 @@ public class TableViewUtils {
     public static void startClickJob(){
         startFlag =true;
         DealyStartThread startJob = new DealyStartThread(new Date());
-//        Date start = new Date();
-//        while (startFlag){
-//            for (int i = 0; i < data.size(); i++) {
-//                Task task = data.get(i);
-//                if(task.getEnable()&&startFlag){
-//                    Date now = new Date();
-//                    if((now.getTime()-start.getTime())<5*60*1000){
-//                        MouseUtils.clikTarget(task.getX(),task.getY(),task.getClickNumber());
-//                    }else{
-//                        cancleClickJob();
-//                    }
-//                    try {
-//                        Thread.sleep(task.getDealy());
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        }
+        startJob.run();
     }
 
     public static void dealyStartClickJob(Date startDate){
