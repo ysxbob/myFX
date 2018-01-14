@@ -16,12 +16,14 @@ public class TableViewUtils {
         Task task = new Task(id);
         data.add(id,task);
         sort(data);
+        FileUtils.saveData(data);
         return data;
     }
 
     public static ObservableList<Task> delTask(int id) {
         data.remove(id -1);
         sort(data);
+        FileUtils.saveData(data);
         return data;
     }
 
@@ -30,8 +32,13 @@ public class TableViewUtils {
     }
 
     public static ObservableList<Task> getDefaultTask() {
-        Task task = new Task(1);
-        data.add(task);
+        ObservableList<Task> list = FileUtils.getData();
+        if (null == list){
+            Task task = new Task(1);
+            data.add(task);
+        }else{
+            data.addAll(list);
+        }
         return data;
     }
 
