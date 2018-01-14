@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_myfx" default="compile.module.myfx">
+  <dirname property="module.myfx.basedir" file="${ant.file.module_myfx}"/>
+  
+  <property name="module.jdk.home.myfx" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.myfx" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.myfx" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.myfx" value="-encoding UTF-8 -source 1.8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="myfx.output.dir" value="${module.myfx.basedir}/out/production/myFX"/>
+  <property name="myfx.testoutput.dir" value="${module.myfx.basedir}/out/test/myFX"/>
+  
+  <path id="myfx.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="myfx.module.production.classpath">
+    <path refid="${module.jdk.classpath.myfx}"/>
+  </path>
+  
+  <path id="myfx.runtime.production.module.classpath">
+    <pathelement location="${myfx.output.dir}"/>
+  </path>
+  
+  <path id="myfx.module.classpath">
+    <path refid="${module.jdk.classpath.myfx}"/>
+    <pathelement location="${myfx.output.dir}"/>
+  </path>
+  
+  <path id="myfx.runtime.module.classpath">
+    <pathelement location="${myfx.testoutput.dir}"/>
+    <pathelement location="${myfx.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.myfx">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.myfx">
+    <patternset refid="excluded.from.module.myfx"/>
+  </patternset>
+  
+  <path id="myfx.module.sourcepath">
+    <dirset dir="${module.myfx.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.myfx" depends="compile.module.myfx.production,compile.module.myfx.tests" description="Compile module myFX"/>
+  
+  <target name="compile.module.myfx.production" depends="register.custom.compilers" description="Compile module myFX; production classes">
+    <mkdir dir="${myfx.output.dir}"/>
+    <javac2 destdir="${myfx.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.myfx}/javac">
+      <compilerarg line="${compiler.args.myfx}"/>
+      <bootclasspath refid="myfx.module.bootclasspath"/>
+      <classpath refid="myfx.module.production.classpath"/>
+      <src refid="myfx.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.myfx"/>
+    </javac2>
+    
+    <copy todir="${myfx.output.dir}">
+      <fileset dir="${module.myfx.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.myfx.tests" depends="register.custom.compilers,compile.module.myfx.production" description="compile module myFX; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.myfx" description="cleanup module">
+    <delete dir="${myfx.output.dir}"/>
+    <delete dir="${myfx.testoutput.dir}"/>
+  </target>
+</project>
