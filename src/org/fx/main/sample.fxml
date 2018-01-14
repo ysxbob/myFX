@@ -18,7 +18,7 @@
                   <Label layoutX="6.0" layoutY="45.0" text="授权码：" />
                   <TextField fx:id="keyText" layoutX="71.0" layoutY="40.0" onAction="#setKey" promptText="请输入授权码" />
                   <Label layoutX="258.0" layoutY="14.0" text="拷贝mac地址申请授权码" />
-                  <Label layoutX="6.0" layoutY="107.0" text="QQ：123456789" />
+                  <Label layoutX="6.0" layoutY="107.0" text="QQ：1476731077" />
                   <Label layoutX="6.0" layoutY="79.0" text="联系方式：" />
                </children>
                 </AnchorPane>
