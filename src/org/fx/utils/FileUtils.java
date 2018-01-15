@@ -1,6 +1,4 @@
 package org.fx.utils;
-
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import javafx.collections.ObservableList;
 import org.fx.model.Task;
 
