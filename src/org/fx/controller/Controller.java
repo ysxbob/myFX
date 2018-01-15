@@ -32,6 +32,8 @@ public class Controller {
     public TextField keyText;
     private TableViewUtils viewUtils;
     public TableView<Task> taskView;
+    public CheckBox dealyCheck;
+    public Button startBtn;
     @FXML
     private TableColumn<Task, String> nameCol, locationCol, deleteCol, addCol;
     @FXML
@@ -40,24 +42,26 @@ public class Controller {
     private TableColumn<Task, Boolean> enableCol;
 
     public void startJob(ActionEvent event) {
-        CheckBox ck = (CheckBox) event.getSource();
-        if (ck.isSelected()) {
-            if (AuthUtils.auth()) {
-                taskView.setEditable(false);
-                TableViewUtils.startClickJob();
-                System.out.println("start job");
-            } else {
-                ck.setSelected(false);
+        if(!TableViewUtils.isClick()){
+            if(AuthUtils.auth()){
+                if(dealyCheck.isSelected()){
+
+                }else{
+                    taskView.setEditable(false);
+                    TableViewUtils.startClickJob();
+                    startBtn.setText("停止任务");
+                    System.out.println("start job");
+                }
             }
-//            ck.setSelected(false);
-//            TableViewUtils.cancleClickJob();
-//            taskView.setEditable(true);
-        } else {
-            TableViewUtils.cancleClickJob();
-            taskView.setEditable(true);
-
+        }else {
+            cancleJob();
         }
+    }
 
+    private void cancleJob() {
+        TableViewUtils.cancleClickJob();
+        taskView.setEditable(true);
+        startBtn.setText("开始任务");
     }
 
     public void addTask(ActionEvent event) {
@@ -218,7 +222,7 @@ public class Controller {
                 switch (markCode) {
                     case 0:
                         System.out.println("hot key enable");
-                        TableViewUtils.cancleClickJob();
+                        cancleJob();
                         break;
                     case 1:
                         System.exit(0);
@@ -242,4 +246,8 @@ public class Controller {
         System.out.println("setkeyEvent");
         AuthUtils.setKey(keyText.getText());
     }
+    public void clickCopy(ActionEvent event){
+
+    }
+
 }
