@@ -1,8 +1,10 @@
 package org.fx.utils;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.fx.model.Task;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FileUtils {
@@ -29,7 +31,8 @@ public class FileUtils {
         try {
             ObjectOutputStream os = new ObjectOutputStream(
                     new FileOutputStream("job.data"));
-            dataMap.put("data", data);
+            ArrayList list = new ArrayList(data);
+            dataMap.put("data", list);
             os.writeObject(dataMap);
             os.close();
         } catch (FileNotFoundException e) {
@@ -40,6 +43,11 @@ public class FileUtils {
     }
 
     public static ObservableList<Task> getData() {
-        return (ObservableList<Task>) dataMap.get("data");
+        ArrayList list = (ArrayList) dataMap.get("data");
+        if(null != list && list.size() > 0){
+            ObservableList<Task> tasks = FXCollections.observableArrayList(list);
+            return (ObservableList<Task>) dataMap.get("data");
+        }
+        return  null;
     }
 }
