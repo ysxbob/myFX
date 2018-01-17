@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import org.fx.utils.TableViewUtils;
 
 public class Main extends Application {
 
@@ -20,11 +21,11 @@ public class Main extends Application {
             @Override
             public void handle(WindowEvent event) {
                 System.out.println("windows close!");
+                TableViewUtils.saveData();
                 System.exit(0);
             }
         });
         primaryStage.show();
-
     }
 
 

@@ -1,4 +1,7 @@
 package org.fx.utils;
+import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
+import com.google.gson.reflect.TypeToken;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.fx.model.Task;
@@ -6,9 +9,12 @@ import org.fx.model.Task;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class FileUtils {
     private static HashMap<String, Object> dataMap;
+    private static Gson gson = new Gson();
 
     static {
         try {
@@ -31,8 +37,7 @@ public class FileUtils {
         try {
             ObjectOutputStream os = new ObjectOutputStream(
                     new FileOutputStream("job.data"));
-            ArrayList list = new ArrayList(data);
-            dataMap.put("data", list);
+            dataMap.put("data", gson.toJson(data,new TypeToken<ObservableList<Task>>(){}.getType()));
             os.writeObject(dataMap);
             os.close();
         } catch (FileNotFoundException e) {
@@ -43,11 +48,14 @@ public class FileUtils {
     }
 
     public static ObservableList<Task> getData() {
-        ArrayList list = (ArrayList) dataMap.get("data");
-        if(null != list && list.size() > 0){
-            ObservableList<Task> tasks = FXCollections.observableArrayList(list);
-            return (ObservableList<Task>) dataMap.get("data");
+        String gsonStr = (String) dataMap.get("data");
+        ArrayList list =gson.fromJson(gsonStr, new TypeToken<ArrayList>(){}.getType());
+        ObservableList<Task> tasks = FXCollections.observableArrayList();
+        for (Object obj: list) {
+            LinkedTreeMap task = (LinkedTreeMap) obj;
+            tasks.add(new Task(task));
         }
-        return  null;
+        return  tasks;
+
     }
 }

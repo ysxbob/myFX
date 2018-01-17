@@ -33,7 +33,7 @@ public class TableViewUtils {
 
     public static ObservableList<Task> getDefaultTask() {
         ObservableList<Task> list = FileUtils.getData();
-        if (null == list){
+        if (null == list|| list.size()==0){
             Task task = new Task(1);
             data.add(task);
         }else{
@@ -61,13 +61,13 @@ public class TableViewUtils {
         System.out.println("&&&&&&&&&&");
     }
     public static void startClickJob(){
-        startFlag =true;
-        DealyStartThread startJob = new DealyStartThread(new Date());
-        startJob.run();
+       dealyStartClickJob(new Date());
     }
 
     public static void dealyStartClickJob(Date startDate){
-
+        startFlag =true;
+        DealyStartThread startJob = new DealyStartThread(startDate);
+        startJob.run();
     }
     public static  boolean isClick(){
         return startFlag;
@@ -76,5 +76,8 @@ public class TableViewUtils {
         startFlag = false;
     }
 
+    public static void saveData(){
+        FileUtils.saveData(data);
+    }
 
 }

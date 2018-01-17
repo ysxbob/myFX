@@ -19,6 +19,7 @@ import javafx.util.converter.IntegerStringConverter;
 import org.fx.model.ScreenShotWindow;
 import org.fx.model.Task;
 import org.fx.utils.AuthUtils;
+import org.fx.utils.FileUtils;
 import org.fx.utils.KeyUtils;
 import org.fx.utils.TableViewUtils;
 
@@ -225,6 +226,7 @@ public class Controller {
                         cancleJob();
                         break;
                     case 1:
+                        TableViewUtils.saveData();
                         System.exit(0);
                         break;
                 }

@@ -1,10 +1,11 @@
 package org.fx.model;
 
+import com.google.gson.internal.LinkedTreeMap;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public final class Task implements java.io.Serializable{
+public final class Task {
     private final SimpleIntegerProperty id = new SimpleIntegerProperty();
     private final SimpleStringProperty name = new SimpleStringProperty();
     private final SimpleIntegerProperty x = new SimpleIntegerProperty();
@@ -19,10 +20,11 @@ public final class Task implements java.io.Serializable{
         setEnable(true);
     }
 
-    public Task(int id){
+    public Task(int id) {
         this();
         setId(id);
     }
+
     public Task(int id, String name, int x, int y, int clickNumber, int dealy, boolean enable) {
         setId(id);
         setName(name);
@@ -31,6 +33,17 @@ public final class Task implements java.io.Serializable{
         setClickNumber(clickNumber);
         setDealy(dealy);
         setEnable(enable);
+    }
+
+    public Task(LinkedTreeMap task) {
+        setId(double2int((double) ((LinkedTreeMap) task.get("id")).get("value")));
+        setName((String) ((LinkedTreeMap) task.get("name")).get("value"));
+        setX(double2int((double) ((LinkedTreeMap) task.get("x")).get("value")));
+        setY(double2int((double) ((LinkedTreeMap) task.get("y")).get("value")));
+        setClickNumber(double2int((double) ((LinkedTreeMap) task.get("clickNumber")).get("value")));
+        setDealy(double2int((double) ((LinkedTreeMap) task.get("dealy")).get("value")));
+        setEnable((boolean) ((LinkedTreeMap) task.get("enable")).get("value"));
+//        this((int) ((LinkedTreeMap) task.get("id")).get("value"), (String) ((LinkedTreeMap) task.get("name")).get("value"), (int)((LinkedTreeMap) task.get("x")).get("value"),(int) ((LinkedTreeMap) task.get("y")).get("value"), (int)((LinkedTreeMap) task.get("clickNumber")).get("value"), (int)((LinkedTreeMap) task.get("dealy")).get("value"), (boolean)((LinkedTreeMap) task.get("enable")).get("value"));
     }
 
     public int getId() {
@@ -115,5 +128,11 @@ public final class Task implements java.io.Serializable{
 
     public void setEnable(boolean enable) {
         this.enable.set(enable);
+    }
+
+    private int double2int(double dou){
+        double d = dou;
+        int i = (int) dou;
+        return  i;
     }
 }
